@@ -11,7 +11,7 @@
 <body style= "background-image: none;background-color: aliceblue;">
     <div class= "heading" >
         <img src = "icon.png" style = "width:70px;height:70px;float:left; margin-left: 50px;margin-top:10px" > 
-        <h1 style = "position:relative; right:30px;">SSA special sine law calculater</h1>    
+        <h1 style = "position:relative; right:30px;">Angle to six ratios</h1>    
         <ul >
             <li><a href = "Home.html">Home</a></li>
             <li><a href = "Munit1.html">Unit 1</a></li>
@@ -22,9 +22,9 @@
             <li><a href = "Munit6.html">Unit 6</a></li>
         </ul>
     </div>
-    <div style = "position: relative; top:200px; margin-left: 20px;">
+    <div style = "position: relative; top:200px; margin-left: 20px">
         <label for ="deg">Angle: </label>
-        <input type = "deg" id = "a"><br><br>
+        <input type = "text" id = "deg" size = "3"><br><br>
         <button type = "button" onclick = "cal()">calculate</button>
         <br>
         <p id = "demo"></p>
@@ -38,15 +38,47 @@
     </div>
     <script>
         function cal(){
+            
             var deg = Number(document.getElementById("deg").value)
             var rad = deg/180*Math.PI
-            document.getElementById()
-            document.getElementById()
-            document.getElementById()
-            document.getElementById()
-            document.getElementById()
-            document.getElementById()
-            document.getElementById()
+
+            let sine = Math.sin(rad).toFixed(2)
+            let cosine = Math.cos(rad).toFixed(2)
+            let tangent = Math.tan(rad).toFixed(2)
+            let csc = (1/Math.sin(rad)).toFixed(2)
+            let sec = (1/Math.cos(rad)).toFixed(2)
+            let cot = (1/Math.tan(rad)).toFixed(2)
+
+            if (deg ==30){
+                sine = "1/2"
+                cosine = "&radic;3/2"
+                tangent = "&radic;3/3"
+                csc = "2"
+                sec = "2&radic;3/3"
+                cot = "&radic;3"
+            }
+            if (deg ==45){
+                sine = "&radic;2/2"
+                cosine = "&radic;2/2"
+                tangent = "1"
+                csc = "&radic;2"
+                sec = "&radic;2"
+                cot = "1"
+            }
+            if (deg ==60){
+                sine = "&radic;3/2"
+                cosine = "1/2"
+                tangent = "&radic;3"
+                csc = "2&radic;3/2"
+                sec = "2"
+                cot = "&radic;3/3"
+            }
+            document.getElementById("demo").innerHTML = "Sin: " + sine
+            document.getElementById("demo1").innerHTML = "Cos: " + cosine
+            document.getElementById("demo2").innerHTML = "Tan: " + tangent
+            document.getElementById("demo3").innerHTML = "Csc: " + csc
+            document.getElementById("demo4").innerHTML = "Sec: " + sec
+            document.getElementById("demo5").innerHTML = "Cot: " + cot
         }
     </script>
     
