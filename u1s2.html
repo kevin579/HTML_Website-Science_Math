@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sine law</title>
+    <link rel = "icon" type = "image/x-icon" href = "icon.png">
+    <link rel = "stylesheet" href = "style.css"></link>
+</head>
+<body style = "background-image: none; background-color: aliceblue;">
+    <div class= "heading" >
+        <img src = "icon.png" style = "width:70px;height:70px;float:left; margin-left: 50px;margin-top:10px" > 
+        <h1 style = "position:relative; right:30px;">SSA special sine law calculater</h1>    
+        <ul >
+            <li><a href = "unit1.html">Back</a></li>
+            <li><a href = "unit1.html">Unit 2</a></li>
+            <li><a href = "unit1.html">Unit 3</a></li>
+            <li><a href = "unit1.html">Unit 4</a></li>
+            <li><a href = "unit1.html">About us</a></li>
+            <li><a href = "unit1.html">Contact</a></li>
+            <li><a href = "unit1.html">Report issue</a></li>
+        </ul>
+    </div>
+    <div style = "position:relative;float: right; top:180px;right:350px;">
+        <img src = "Sine_law.jpg" style = "width:600px">
+    </div>
+    <div style = "position: relative; top:200px; margin-left: 20px;">
+        <label for ="a">Side 1: </label>
+        <input type = "text" id = "a"><br><br>
+        <label for ="a">Side 2: </label>
+        <input type = "text" id = "b" ><br><br>
+        <label for ="a">Angle: </label>
+        <input type = "text" id = "s" ><br><br>
+        <button type = "button" onclick = "calculate()">Calculate</button>
+        <br>
+        <p id = "demo"></p>
+        <p id = "demo1"></p>
+        <p id = "demo2"></p>
+        <p id = "demo3"></p>
+        <p id = "demo4"></p>
+        <p id = "demo5"></p>
+        <p id = "demo6"></p>
+        <p id = "demo7"></p>
+    </div>
+    <br>
+    <script>
+        function calculate(){
+            var a = Number(document.getElementById("a").value)
+            var b = Number(document.getElementById("b").value)
+            var s = Number(document.getElementById("s").value)
+            let rads = s/180*Math.PI
+            if (a>b*Math.sin(rads) || (a==b*Math.sin(rads) && s<90)){ 
+                let radangleb = Math.asin(Math.sin(rads)*b/a)
+                let degangleb = radangleb*180/Math.PI
+                let deganglec = 180 - s - degangleb
+                let radanglec = deganglec/180*Math.PI
+                let c = Math.sin(radanglec)/Math.sin(rads)*a
+                document.getElementById("demo").innerHTML = "Angle A: " + s.toFixed(2) + "<sup>o</sup>"
+                document.getElementById("demo1").innerHTML = "Angle B: " + degangleb.toFixed(2) + "<sup>o</sup>"
+                document.getElementById("demo2").innerHTML ="Angle C: " + deganglec.toFixed(2)  + "<sup>o</sup>"
+                document.getElementById("demo4").innerHTML ="Side a: " + a.toFixed(2)
+                document.getElementById("demo5").innerHTML ="Side b: " + b.toFixed(2)
+                document.getElementById("demo6").innerHTML ="Side c: " + c.toFixed(2)
+
+                if (a>b*Math.sin(rads) && a<b && s<90){
+                    let deganglec2 = degangleb-s
+                    let radanglec2 = deganglec2/180*Math.PI
+                    let c2 = Math.sin(radanglec2)/Math.sin(rads)*a
+                    document.getElementById("demo3").innerHTML = "Angle C2: " + (degangleb-s).toFixed(2) + "<sup>o</sup>"
+                    document.getElementById("demo7").innerHTML = "side c2: " + (c2).toFixed(2)
+                }
+            }else{
+                document.getElementById("demo").innerHTML = "There is no such triangle"
+            }
+        }
+    </script>
+
+    
+</body>
+</html>

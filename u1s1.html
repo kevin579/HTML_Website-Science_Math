@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vector</title>
+    <link rel = "icon" type = "image/x-icon" href = "icon.png">
+    <link rel = "stylesheet" href = "style.css">
+
+</head>
+<body style = "background-image: none; background-color: aliceblue;">
+    <div class= "heading">
+        <img src = "icon.png" style = "width:70px;height:70px;float:left; margin-left: 50px;margin-top:10px" > 
+        <h1 style = "position:relative; right:30px;">Vector calculater</h1>
+        <ul>
+            <li><a href = "unit1.html">Unit 1</a></li>
+            <li><a href = "unit1.html">Unit 2</a></li>
+            <li><a href = "unit1.html">Unit 3</a></li>
+            <li><a href = "unit1.html">Unit 4</a></li>
+            <li><a href = "unit1.html">About us</a></li>
+            <li><a href = "unit1.html">Contact</a></li>
+            <li><a href = "unit1.html">Report issue</a></li>
+        </ul>
+    </div>
+
+    <div style = "position: absolute; top:200px; margin-left: 20px;">
+        <p>Input format:</p>
+        <p>1. Input four vectors: Ex. n 60 e 100</p>
+        <p>2. Input two vectors Ex. w 100</p>
+        <p>ps. type <i>n</i> and <i>s</i> before <i>e</i> and <i>w</i></p>
+        <input type = "text" id = "input"><br><br>
+        <button type = "button" onclick ="get()">calculate</button>
+        <button type = "button" onclick = "location.reload()">clear</button>
+        <p id = "demo1"></p>
+        <p id = "demo2"></p>
+        <p id = "demo3"></p>
+    </div>
+    <div style = "position: absolute; left:400px;bottom:20px">
+        <canvas id = "myCanvas" style = "background-color: white" width='800' height='420'>
+            uu
+        </canvas>
+    </div>
+    <script>
+        var x = 0;
+        var y = 0;
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+
+        document.getElementById("demo1").innerHTML = "x: " + x
+        document.getElementById("demo2").innerHTML = "y: " + y
+        document.getElementById("demo3").innerHTML = "vector: " + 0
+        ctx.beginPath();
+        ctx.strokeStyle = "#DCDCDC";
+        ctx.moveTo(400,160);
+        ctx.lineTo(400,260);
+        ctx.moveTo(350,210);
+        ctx.lineTo(450,210);   
+        ctx.stroke();
+        var xs = []
+        var ys = []
+        var lines = []
+        function get(){
+            
+            var xx = x;
+            var yy = y;
+            var num = 0;
+            
+            var vector = document.getElementById("input").value.toString()
+            vector = vector.split(" ")
+            if (vector.length==4){
+                var start = vector[0]
+                start = start.toUpperCase()
+                var deg = Number(vector[1])
+                var end = vector[2]
+                end = end.toUpperCase()
+                var size = Number(vector[3])
+                var rad = deg/180*Math.PI
+                if (start =="N" && end =="E"){
+                    x += size*Math.sin(rad)
+                    y += size*Math.cos(rad)
+                }
+                else if (start =="N" && end =="W"){
+                    x -= size*Math.sin(rad) 
+                    y += size*Math.cos(rad) 
+                }
+                else if (start =="S" && end =="E"){
+                    x += size*Math.sin(rad) 
+                    y -= size*Math.cos(rad) 
+                }
+                else if (start =="S" && end =="W"){
+                    x -= size*Math.sin(rad) 
+                    y -= size*Math.cos(rad) 
+                }
+               
+            }
+            else if (vector.length ==2){
+                var start = vector[0]
+                start = start.toUpperCase()
+                var size = Number(vector[1])
+                if (start == "N"){
+                    y+=size;
+                }
+                else if (start == "S"){
+                    y-=size;
+                }
+                else if (start == "E"){
+                    x+=size
+                }
+                else if (start == "W"){
+                    x-=size
+                }
+            }
+            else{
+                return
+            }
+            let frad = Math.atan(x/y)
+            let fdeg = Math.abs(frad*180/Math.PI)
+            let fsize = Math.sqrt(x*x+y*y)
+            document.getElementById("demo1").innerHTML = "x: " + x.toFixed(2)
+            document.getElementById("demo2").innerHTML = "y: " + y.toFixed(2)
+            if (x>=0 && y>=0){
+                document.getElementById("demo3").innerHTML = "vector: " + "[N " + fdeg.toFixed(2) + "<sup>o</sup>" + " E] " + fsize.toFixed(2) + " m"
+            }
+            else if (x>=0 && y<0){
+                document.getElementById("demo3").innerHTML = "vector: " + "[S " + fdeg.toFixed(2) + "<sup>o</sup>" + " E] " + fsize.toFixed(2) + " m"
+            }
+            else if (x<0 && y>=0){
+                document.getElementById("demo3").innerHTML = "vector: " + "[N " + fdeg.toFixed(2) + "<sup>o</sup>" + " W] " + fsize.toFixed(2) + " m"
+            }
+            else if (x<0 && y<0){
+                document.getElementById("demo3").innerHTML = "vector: " + "[S " + fdeg.toFixed(2) + "<sup>o</sup>" + " W] " + fsize.toFixed(2) + " m"
+            }
+            document.getElementById("input").value = null
+
+            lines.push([400+xx,210-yy,400+x,210-y])
+            xs.push(xx)
+            ys.push(yy)
+           
+            
+            ctx.clearRect(0,0,800,420)
+            ctx.strokeStyle = "#DCDCDC"
+            ctx.translate(0.5,0.5);
+            ctx.lineWidth = 2;
+            drawArrow(ctx,400,210,400+x,210-y,'red')
+            for (num =0;num<lines.length;num++){
+                
+                ctx.beginPath();
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = "#DCDCDC";
+                
+                ctx.moveTo(400+xs[num],180-ys[num]);
+                ctx.lineTo(400+xs[num],240-ys[num]);
+                ctx.moveTo(370+xs[num],210-ys[num]);
+                ctx.lineTo(430+xs[num],210-ys[num]);
+                ctx.moveTo(400+xs[num],210-ys[num]);
+                ctx.stroke();
+                ctx.strokeStyle = "black"
+                ctx.lineWidth = 2;
+                drawArrow(ctx,lines[num][0],lines[num][1],lines[num][2], lines[num][3],'black')
+            }
+            function drawArrow(ctx, fromx, fromy, tox, toy, arrowWidth, color){
+                var headlen = 5;
+                var angle = Math.atan2(toy-fromy,tox-fromx);
+            
+                ctx.save();
+                ctx.strokeStyle = color;
+            
+                ctx.beginPath();
+                ctx.moveTo(fromx, fromy);
+                ctx.lineTo(tox, toy);
+                ctx.lineWidth = arrowWidth;
+                ctx.stroke();
+            
+
+                ctx.beginPath();
+                ctx.moveTo(tox, toy);
+                ctx.lineTo(tox-headlen*Math.cos(angle-Math.PI/7),
+                        toy-headlen*Math.sin(angle-Math.PI/7));
+            
+                ctx.lineTo(tox-headlen*Math.cos(angle+Math.PI/7),
+                        toy-headlen*Math.sin(angle+Math.PI/7));
+            
+
+                ctx.lineTo(tox, toy);
+                ctx.lineTo(tox-headlen*Math.cos(angle-Math.PI/7),
+                        toy-headlen*Math.sin(angle-Math.PI/7));
+            
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+    </script>
+    
+</body>
+</html>
