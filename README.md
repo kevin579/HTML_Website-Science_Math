@@ -1,4 +1,4 @@
 # Science
 
-Only halfly completed<br>
-Using HTML, CSS, and JavaScript
+This is a study website for Grade 11 function and physic.
+<br>
